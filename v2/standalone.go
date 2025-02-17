@@ -21,6 +21,7 @@ import (
 
 func RunStandalone(hiddifySettingPath string, configPath string, defaultConfig config.HiddifyOptions) error {
 	fmt.Println("Running in standalone mode")
+	// defaultConfig.BlockAds = true
 	useFlutterBridge = false
 	current, err := readAndBuildConfig(hiddifySettingPath, configPath, &defaultConfig)
 	if err != nil {

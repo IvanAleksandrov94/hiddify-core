@@ -594,7 +594,16 @@ func setRoutingOptions(options *option.Options, opt *HiddifyOptions) {
 			Tag:    "geosite-ads",
 			Format: C.RuleSetFormatBinary,
 			RemoteOptions: option.RemoteRuleSet{
-				URL:            "https://raw.githubusercontent.com/hiddify/hiddify-geo/rule-set/block/geosite-category-ads-all.srs",
+				URL:            "https://raw.githubusercontent.com/IvanAleksandrov94/ads_rules/main/ruleset_ru_base.srs",
+				UpdateInterval: option.Duration(5 * time.Hour * 24),
+			},
+		})
+		rulesets = append(rulesets, option.RuleSet{
+			Type:   C.RuleSetTypeRemote,
+			Tag:    "geosite-ads-yandex",
+			Format: C.RuleSetFormatBinary,
+			RemoteOptions: option.RemoteRuleSet{
+				URL:            "https://raw.githubusercontent.com/IvanAleksandrov94/ads_rules/main/ruleset_ru_yandex_only.srs",
 				UpdateInterval: option.Duration(5 * time.Hour * 24),
 			},
 		})
@@ -649,6 +658,7 @@ func setRoutingOptions(options *option.Options, opt *HiddifyOptions) {
 			DefaultOptions: option.DefaultRule{
 				RuleSet: []string{
 					"geosite-ads",
+					"geosite-ads-yandex",
 					"geosite-malware",
 					"geosite-phishing",
 					"geosite-cryptominers",
@@ -661,6 +671,7 @@ func setRoutingOptions(options *option.Options, opt *HiddifyOptions) {
 		dnsRules = append(dnsRules, option.DefaultDNSRule{
 			RuleSet: []string{
 				"geosite-ads",
+				"geosite-ads-yandex",
 				"geosite-malware",
 				"geosite-phishing",
 				"geosite-cryptominers",

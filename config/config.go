@@ -711,17 +711,6 @@ func setRoutingOptions(options *option.Options, opt *HiddifyOptions) {
 			},
 		})
 
-		routeRules = append(routeRules, option.Rule{
-			Type: C.RuleTypeDefault,
-			DefaultOptions: option.DefaultRule{
-				RuleSet: []string{
-					"geoip-" + opt.Region,
-					"geosite-" + opt.Region,
-				},
-				Outbound: OutboundDirectTag,
-			},
-		})
-
 	}
 	options.Route = &option.RouteOptions{
 		Rules:               routeRules,

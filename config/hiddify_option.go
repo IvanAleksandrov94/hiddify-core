@@ -29,13 +29,17 @@ type HiddifyOptions struct {
 }
 
 type DNSOptions struct {
-	RemoteDnsAddress        string                `json:"remote-dns-address"`
-	RemoteDnsDomainStrategy option.DomainStrategy `json:"remote-dns-domain-strategy"`
-	DirectDnsAddress        string                `json:"direct-dns-address"`
-	DirectDnsDomainStrategy option.DomainStrategy `json:"direct-dns-domain-strategy"`
-	IndependentDNSCache     bool                  `json:"independent-dns-cache"`
-	EnableFakeDNS           bool                  `json:"enable-fake-dns"`
-	EnableDNSRouting        bool                  `json:"enable-dns-routing"`
+	RemoteDnsAddress             string                `json:"remote-dns-address"`
+	RemoteDnsAddressProxy        string                `json:"remote-dns-address-proxy"`
+	RemoteDnsDomainStrategy      option.DomainStrategy `json:"remote-dns-domain-strategy"`
+	RemoteDnsDomainStrategyProxy option.DomainStrategy `json:"remote-dns-domain-strategy-proxy"`
+	DirectDnsAddress             string                `json:"direct-dns-address"`
+	DirectDnsDomainStrategy      option.DomainStrategy `json:"direct-dns-domain-strategy"`
+	IndependentDNSCache          bool                  `json:"independent-dns-cache"`
+	EnableFakeDNS                bool                  `json:"enable-fake-dns"`
+	EnableDNSRouting             bool                  `json:"enable-dns-routing"`
+	EnableDNSProxy               bool                  `json:"enable-dns-proxy"`
+	ProxyDomains                 []string              `json:"proxied-dns-domains"`
 }
 
 type InboundOptions struct {
@@ -97,13 +101,17 @@ type WarpOptions struct {
 func DefaultHiddifyOptions() *HiddifyOptions {
 	return &HiddifyOptions{
 		DNSOptions: DNSOptions{
-			RemoteDnsAddress:        "1.1.1.1",
-			RemoteDnsDomainStrategy: option.DomainStrategy(dns.DomainStrategyAsIS),
-			DirectDnsAddress:        "1.1.1.1",
-			DirectDnsDomainStrategy: option.DomainStrategy(dns.DomainStrategyAsIS),
-			IndependentDNSCache:     false,
-			EnableFakeDNS:           false,
-			EnableDNSRouting:        false,
+			RemoteDnsAddress:             "1.1.1.1",
+			RemoteDnsDomainStrategy:      option.DomainStrategy(dns.DomainStrategyAsIS),
+			RemoteDnsAddressProxy:        "https://dns.comss.one/dns-query",
+			RemoteDnsDomainStrategyProxy: option.DomainStrategy(dns.DomainStrategyAsIS),
+			DirectDnsAddress:             "1.1.1.1",
+			DirectDnsDomainStrategy:      option.DomainStrategy(dns.DomainStrategyAsIS),
+			IndependentDNSCache:          false,
+			EnableFakeDNS:                false,
+			EnableDNSRouting:             false,
+			EnableDNSProxy:               false,
+			ProxyDomains:                 []string{},
 		},
 		InboundOptions: InboundOptions{
 			EnableTun:      false,

@@ -20,6 +20,7 @@ import (
 
 const (
 	DNSRemoteTag       = "dns-remote"
+	DNSProxyTag        = "dns-proxy"
 	DNSLocalTag        = "dns-local"
 	DNSDirectTag       = "dns-direct"
 	DNSBlockTag        = "dns-block"
@@ -27,6 +28,7 @@ const (
 	DNSTricksDirectTag = "dns-trick-direct"
 
 	OutboundDirectTag         = "direct"
+	OutboundProxyTag          = "proxy"
 	OutboundBypassTag         = "bypass"
 	OutboundBlockTag          = "block"
 	OutboundSelectTag         = "select"
@@ -402,6 +404,12 @@ func setDns(options *option.Options, opt *HiddifyOptions) {
 				Strategy:        opt.RemoteDnsDomainStrategy,
 			},
 			{
+				Tag:      DNSProxyTag,
+				Address:  opt.RemoteDnsAddressProxy,
+				Strategy: opt.RemoteDnsDomainStrategy,
+				// Detour:   OutboundProxyTag,
+			},
+			{
 				Tag:     DNSTricksDirectTag,
 				Address: "https://sky.rethinkdns.com/",
 				// AddressResolver: "dns-local",
@@ -425,6 +433,9 @@ func setDns(options *option.Options, opt *HiddifyOptions) {
 				Address: "rcode://success",
 			},
 		},
+		// Rules: []option.DNSRule{
+
+		// },
 	}
 	sky_rethinkdns := getIPs([]string{"www.speedtest.net", "sky.rethinkdns.com"})
 	if len(sky_rethinkdns) > 0 {
@@ -723,6 +734,16 @@ func setRoutingOptions(options *option.Options, opt *HiddifyOptions) {
 		})
 
 	}
+
+	if opt.EnableDNSProxy {
+		for _, domain := range opt.ProxyDomains {
+			dnsRules = append(dnsRules, option.DefaultDNSRule{
+				Domain: []string{domain},
+				Server: DNSProxyTag,
+			})
+		}
+	}
+
 	options.Route = &option.RouteOptions{
 		Rules:               routeRules,
 		Final:               OutboundMainProxyTag,

@@ -609,15 +609,17 @@ func setRoutingOptions(options *option.Options, opt *HiddifyOptions) {
 				UpdateInterval: option.Duration(5 * time.Hour * 24),
 			},
 		})
-		rulesets = append(rulesets, option.RuleSet{
-			Type:   C.RuleSetTypeRemote,
-			Tag:    "geosite-ads-yandex",
-			Format: C.RuleSetFormatBinary,
-			RemoteOptions: option.RemoteRuleSet{
-				URL:            "https://raw.githubusercontent.com/IvanAleksandrov94/ads_rules/main/ruleset_ru_yandex_only.srs",
-				UpdateInterval: option.Duration(5 * time.Hour * 24),
-			},
-		})
+		if opt.BlockAdsYandex {
+			rulesets = append(rulesets, option.RuleSet{
+				Type:   C.RuleSetTypeRemote,
+				Tag:    "geosite-ads-yandex",
+				Format: C.RuleSetFormatBinary,
+				RemoteOptions: option.RemoteRuleSet{
+					URL:            "https://raw.githubusercontent.com/IvanAleksandrov94/ads_rules/main/ruleset_ru_yandex_only.srs",
+					UpdateInterval: option.Duration(5 * time.Hour * 24),
+				},
+			})
+		}
 		rulesets = append(rulesets, option.RuleSet{
 			Type:   C.RuleSetTypeRemote,
 			Tag:    "geosite-malware",
@@ -736,7 +738,7 @@ func setRoutingOptions(options *option.Options, opt *HiddifyOptions) {
 	}
 
 	if opt.EnableDNSProxy {
-		for _, domain := range opt.ProxyDomains {
+		for _, domain := range opt.ProxiedDomains {
 			dnsRules = append(dnsRules, option.DefaultDNSRule{
 				Domain: []string{domain},
 				Server: DNSProxyTag,

@@ -14,6 +14,7 @@ type HiddifyOptions struct {
 	ClashApiSecret          string `json:"web-secret"`
 	Region                  string `json:"region"`
 	BlockAds                bool   `json:"block-ads"`
+	BlockAdsYandex          bool   `json:"block-ads-yandex"`
 	UseXrayCoreWhenPossible bool   `json:"use-xray-core-when-possible"`
 	// GeoIPPath        string      `json:"geoip-path"`
 	// GeoSitePath      string      `json:"geosite-path"`
@@ -39,7 +40,7 @@ type DNSOptions struct {
 	EnableFakeDNS                bool                  `json:"enable-fake-dns"`
 	EnableDNSRouting             bool                  `json:"enable-dns-routing"`
 	EnableDNSProxy               bool                  `json:"enable-dns-proxy"`
-	ProxyDomains                 []string              `json:"proxied-dns-domains"`
+	ProxiedDomains               []string              `json:"proxied-dns-domains"`
 }
 
 type InboundOptions struct {
@@ -111,7 +112,7 @@ func DefaultHiddifyOptions() *HiddifyOptions {
 			EnableFakeDNS:                false,
 			EnableDNSRouting:             false,
 			EnableDNSProxy:               false,
-			ProxyDomains:                 []string{},
+			ProxiedDomains:               []string{},
 		},
 		InboundOptions: InboundOptions{
 			EnableTun:      false,

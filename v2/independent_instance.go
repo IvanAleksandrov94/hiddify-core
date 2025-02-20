@@ -48,6 +48,7 @@ func RunInstance(hiddifySettings *config.HiddifyOptions, singconfig *option.Opti
 	hiddifySettings.InboundOptions.LocalDnsPort = 0
 	hiddifySettings.Region = "other"
 	hiddifySettings.BlockAds = false
+	hiddifySettings.BlockAdsYandex = false
 	hiddifySettings.LogFile = "/dev/null"
 
 	finalConfigs, err := config.BuildConfig(*hiddifySettings, *singconfig)
